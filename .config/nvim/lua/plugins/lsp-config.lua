@@ -23,6 +23,9 @@ return{
       capabilities.textDocument.completion.completionItem.snippetSupport = true
       vim.keymap.set('n','K',vim.lsp.buf.hover,{})
       vim.keymap.set({'n'},'<leader>ca',vim.lsp.buf.code_action,{})
+      vim.keymap.set('n', '<leader>D',vim.lsp.buf.type_definition(),{})
+      vim.keymap.set('n', '<leader>rn',vim.lsp.buf.rename(),{})
+      vim.keymap.set('n', '<leader>e',vim.lsp.diagnostic.show_line_diagnostics(),{})
       lspconfig.lua_ls.setup({
 	capabilities = capabilities
       })
@@ -30,7 +33,7 @@ return{
 	capabilities = capabilities,
 	init_options = {
 	  fallbackFlags = {'--std=c++20'}
-	},
+	  }
       })
       lspconfig.pyright.setup({
 	capabilities = capabilities
