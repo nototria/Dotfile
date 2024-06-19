@@ -110,5 +110,5 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias r="bash ./run.sh"
+alias r="sh ~/workflow/run.sh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
