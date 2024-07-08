@@ -10,7 +10,7 @@ return{
     config =function()
       require("mason-lspconfig").setup({
 	ensure_installed = {
-	  "lua_ls","clangd","pyright"
+	  "lua_ls","clangd","pyright","r_language_server"
 	}
       })
     end
@@ -37,7 +37,9 @@ return{
       lspconfig.pyright.setup({
 	capabilities = capabilities
       })
-
+      lspconfig.r_language_server.setup({
+	capabilities = capabilities
+      })
     end
   }
 }
