@@ -41,7 +41,8 @@ return{
 	    end, result.diagnostics)
 	    vim.lsp.handlers["textDocument/publishDiagnostics"](_, result, ctx, config)
 	  end
-	}
+	},
+	cmd = { "clangd", "--clang-tidy", "--clang-tidy-checks=-*,clang-analyzer-*"}
       })
       lspconfig.pyright.setup({
 	capabilities = capabilities,
