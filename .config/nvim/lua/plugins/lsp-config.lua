@@ -32,13 +32,45 @@ return{
 	capabilities = capabilities,
 	init_options = {
 	  fallbackFlags = {'--std=c++20'}
-	  }
+	},
+	handlers = {
+	  ["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+	    result.diagnostics = vim.tbl_filter(function(diagnostic)
+	      -- Filter out specific diagnostics
+	      return diagnostic.message ~= "Some diagnostic message to ignore"
+	    end, result.diagnostics)
+	    vim.lsp.handlers["textDocument/publishDiagnostics"](_, result, ctx, config)
+	  end
+	}
       })
       lspconfig.pyright.setup({
-	capabilities = capabilities
+	capabilities = capabilities,
+	settings = {
+	  python = {
+	    analysis = {
+	      diagnosticMode = "openFilesOnly",
+	      typeCheckingMode = "off",
+	      useLibraryCodeForTypes = true,
+	      diagnosticSeverityOverrides = {
+		reportGeneralTypeIssues = "none",
+		reportOptionalSubscript = "none",
+	      }
+	    }
+	  }
+	}
       })
       lspconfig.r_language_server.setup({
-	capabilities = capabilities
+	capabilities = capabilities,
+	settings = {
+	  r = {
+	    lsp = {
+	      diagnostics = false
+	      -- diagnostics = {
+	      --   disabled = { "lintr::infix_spaces_linter", "lintr::object_length_linter" },
+	      -- }
+	    }
+	  }
+	}
       })
     end
   }
