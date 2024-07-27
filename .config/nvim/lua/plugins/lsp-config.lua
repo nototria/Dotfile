@@ -37,15 +37,6 @@ return{
 	init_options = {
 	  fallbackFlags = {'--std=c++20'}
 	},
-	handlers = {
-	  ["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
-	    result.diagnostics = vim.tbl_filter(function(diagnostic)
-	      -- Filter out specific diagnostics
-	      return diagnostic.message ~= "Some diagnostic message to ignore"
-	    end, result.diagnostics)
-	    vim.lsp.handlers["textDocument/publishDiagnostics"](_, result, ctx, config)
-	  end
-	},
 	cmd = { "clangd", "--clang-tidy", "--clang-tidy-checks=-*,clang-analyzer-*"}
       })
       lspconfig.pyright.setup({

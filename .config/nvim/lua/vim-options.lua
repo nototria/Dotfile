@@ -29,3 +29,20 @@ vim.keymap.set('n','<c-k>',':wincmd k<CR>')
 vim.keymap.set('n','<c-j>',':wincmd j<CR>')
 vim.keymap.set('n','<c-h>',':wincmd h<CR>')
 vim.keymap.set('n','<c-l>',':wincmd l<CR>')
+
+-- Function to toggle diagnostics
+local diagnostics_enabled = true
+
+local function ToggleDiagnostics()
+  diagnostics_enabled = not diagnostics_enabled
+  if diagnostics_enabled then
+    vim.diagnostic.enable()
+    print("diagnostic enable")
+  else
+    vim.diagnostic.disable()
+    print("diagnostic disable")
+  end
+end
+
+-- Keymap to toggle diagnostics
+vim.keymap.set('n', '<leader>dn', ToggleDiagnostics, { noremap = true, silent = true })
