@@ -18,7 +18,6 @@ plugins=(
   colored-man-pages
   zsh-autosuggestions
   zsh-syntax-highlighting
-  zsh-z
 )
 
 # alias
