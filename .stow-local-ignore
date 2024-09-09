@@ -1,6 +1,6 @@
-^requirements\.txt$
-^install\.sh$
-^zplugin_requirement\.txt$
-^README\.md$
-^\.git$
-^\.gitignore$
+requirements\.txt
+install\.sh
+zplugin_requirement\.txt
+README\.md
+\.git
+\.gitignore
