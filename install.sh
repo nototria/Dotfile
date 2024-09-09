@@ -45,12 +45,25 @@ else
     echo "Zsh is already installed."
 fi
 
+# Backup existing .zshrc file if it exists
+if [ -f "$HOME/.zshrc" ]; then
+    echo "Backing up existing .zshrc to .zshrc.bak"
+    mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
+fi
+
 # Install Oh My Zsh if not already installed
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     echo "Installing Oh My Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 else
     echo "Oh My Zsh is already installed."
+fi
+
+# Restore custom .zshrc from dotfiles after Oh My Zsh installation
+if [ -f "$HOME/.zshrc.bak" ]; then
+    echo "Restoring custom .zshrc"
+    rm -f "$HOME/.zshrc"  # Remove the default .zshrc created by Oh My Zsh
+    mv "$HOME/.zshrc.bak" "$HOME/.zshrc"
 fi
 
 # Install plugins from zplugin_requirement.txt
@@ -67,7 +80,7 @@ if [ -f "zplugin_requirement.txt" ]; then
             echo "Zsh plugin $plugin already installed."
         fi
     done < "zplugin_requirement.txt"
-els
+else
     echo "zplugin_requirement.txt not found, skipping Zsh plugin installation."
 fi
 
@@ -85,12 +98,12 @@ else
     echo "requirements.txt not found, skipping package installation."
 fi
 
-# Function to delete existing files/symlinks and stow individual files
-stow_files() {
+# Function to delete existing files/symlinks in the home directory
+cleanup_home_directory() {
     for file in "$1"/*; do
         if [ -d "$file" ]; then
             # Recursively go into directories
-            stow_files "$file"
+            cleanup_home_directory "$file"
         elif [ -f "$file" ]; then
             # Get the relative path to the home directory (or other target dir)
             target="$HOME/$(basename "$file")"
@@ -102,11 +115,15 @@ stow_files() {
             fi
         fi
     done
-    stow $(basename $(pwd))
 }
+
+# Clean up existing files in the home directory
+echo "Cleaning up existing files in the home directory..."
+cleanup_home_directory "$(pwd)"
 
 # Stow all individual files in the current directory
 echo "Stowing individual files..."
-stow_files "$(pwd)"
+stow --dir="$(pwd)" --target="$HOME" *
 
 echo "Installation complete. Make sure to restart your shell or set Zsh as the default using: chsh -s $(which zsh)"
+
