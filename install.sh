@@ -149,5 +149,6 @@ done
 find "$fonts_dir" -name 'Windows Compatible' -delete
 fc-cache -fv
 
+chsh -s $(which zsh) $(whoami)
 echo "Installation complete."
 
