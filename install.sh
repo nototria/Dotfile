@@ -122,8 +122,8 @@ echo "Cleaning up existing files in the home directory..."
 cleanup_home_directory "$(pwd)"
 
 # Stow all individual files in the current directory
-echo "Stowing individual files..."
-stow --dir="$(pwd)" --target="$HOME" *
+echo "Stowing files."
+stow .
 
 echo "Installation complete."
 
