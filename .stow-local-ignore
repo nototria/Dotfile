@@ -1,3 +1,4 @@
 ^requirements\.txt$
 ^install\.sh$
+^README\.md$
 ^zplugin_requirement\.txt$
