@@ -148,7 +148,9 @@ rm "$zip_file"
 done
 find "$fonts_dir" -name 'Windows Compatible' -delete
 fc-cache -fv
-
+# change shell to zsh
+echo "Changing default shell to zsh."
 chsh -s $(which zsh) $(whoami)
+
 echo "Installation complete."
 
