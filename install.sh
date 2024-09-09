@@ -100,12 +100,9 @@ stow_files() {
                 echo "Removing existing file or symlink: $target"
                 rm -rf "$target"
             fi
-
-            # Stow each individual file
-            echo "Stowing file: $file"
-            stow "$file"
         fi
     done
+    stow $HOME
 }
 
 # Stow all individual files in the current directory
