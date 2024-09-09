@@ -125,5 +125,5 @@ cleanup_home_directory "$(pwd)"
 echo "Stowing individual files..."
 stow --dir="$(pwd)" --target="$HOME" *
 
-echo "Installation complete. Make sure to restart your shell or set Zsh as the default using: chsh -s $(which zsh)"
+echo "Installation complete."
 
