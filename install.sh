@@ -102,7 +102,7 @@ stow_files() {
             fi
         fi
     done
-    stow $HOME
+    stow $(basename $(pwd))
 }
 
 # Stow all individual files in the current directory
