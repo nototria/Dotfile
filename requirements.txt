@@ -3,3 +3,4 @@ ripgrep
 unzip
 tmux
 npm
+curl
