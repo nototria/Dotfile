@@ -156,8 +156,6 @@ for font in "${fonts[@]}"; do
     wget "$download_url"
     unzip "$zip_file" -d "$fonts_dir"
     rm "$zip_file"
-  else
-    echo "$font already installed."
   fi
 done
 find "$fonts_dir" -name 'Windows Compatible' -delete
