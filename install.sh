@@ -147,7 +147,9 @@ if [[ ! -d "$fonts_dir" ]]; then
 fi
 for font in "${fonts[@]}"; do
   font_file="${fonts_dir}/${font}.ttf"
-  if [[ ! -f "$font_file" ]]; then
+  if ls "$fonts_dir" | grep -q "${font}.*\.ttf"; then
+    echo "$font already installed."
+  else
     zip_file="${font}.zip"
     download_url="https://github.com/ryanoasis/nerd-fonts/releases/download/${version}/${zip_file}"
     echo "Downloading $download_url"
