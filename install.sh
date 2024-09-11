@@ -128,8 +128,6 @@ stow .
 # install Nerd font
 echo "installing Nerd fonts."
 declare -a fonts=(
-FiraCode
-FiraMono
 JetBrainsMono
 Meslo
 )
