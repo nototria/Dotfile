@@ -40,8 +40,7 @@ return{
 	capabilities = capabilities,
 	init_options = {
 	  fallbackFlags = {'--std=c++20'}
-	},
-	cmd = { "clangd", "--clang-tidy", "--clang-tidy-checks=-*,clang-analyzer-*"}
+	}
       })
       lspconfig.pyright.setup({
 	capabilities = capabilities,
