@@ -10,7 +10,7 @@ return{
     config =function()
       require("mason-lspconfig").setup({
 	ensure_installed = {
-	  "lua_ls","clangd","pyright","svlangserver"
+	  "lua_ls","clangd","pyright",
 	}
       })
     end
