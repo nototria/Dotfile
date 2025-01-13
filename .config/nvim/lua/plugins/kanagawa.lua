@@ -11,6 +11,6 @@ return {
       highlight CursorLineNr guifg=#ffffff guibg=NONE
       highlight clear SignColumn
       highlight SignColumn guibg=NONE      
-    ]])
+      ]])
   end
 }

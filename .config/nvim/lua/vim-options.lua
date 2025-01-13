@@ -6,8 +6,7 @@ vim.o.numberwidth = 2
 
 --auto-complete brace
 local function auto_complete_braces()
-  local row, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-  local current_line = vim.api.nvim_get_current_line()
+  local row, col = table.unpack(vim.api.nvim_win_get_cursor(0)) local current_line = vim.api.nvim_get_current_line()
   local current_indent = string.match(current_line, "^%s*")
   local shiftwidth = vim.api.nvim_get_option("shiftwidth")
   local tab_spaces = string.rep(" ", shiftwidth)
@@ -24,7 +23,7 @@ vim.cmd("inoremap [ []<Esc>ha")
 vim.cmd("inoremap ' ''<Esc>ha")
 vim.cmd([[inoremap " ""<Esc>i]])
 
---movement between window
+-- movement between window
 vim.keymap.set('n','<c-k>',':wincmd k<CR>')
 vim.keymap.set('n','<c-j>',':wincmd j<CR>')
 vim.keymap.set('n','<c-h>',':wincmd h<CR>')
@@ -43,6 +42,25 @@ local function ToggleDiagnostics()
     print("diagnostic disable")
   end
 end
+
+-- treesitter hotkey
+vim.keymap.set('n', '<leader>tt', ':Neotree toggle<CR>', {})
+
+-- tmux-vim navigator hotkey
+vim.keymap.set('n','C-h', ':TmuxNavigateLeft<CR>')
+vim.keymap.set('n','C-j', ':TmuxNavigateDown<CR>')
+vim.keymap.set('n','C-k', ':TmuxNavigateUp<CR>')
+vim.keymap.set('n','C-l', ':TmuxNavigateRight<CR>')
+
+-- lsp hotkey
+vim.keymap.set('n','K',vim.lsp.buf.hover,{})
+vim.keymap.set({'n'},'<leader>ca',vim.lsp.buf.code_action,{})
+vim.keymap.set('n', '<leader>gd',vim.lsp.buf.definition,{})
+vim.keymap.set('n','<leader>gD',vim.lsp.buf.declaration,{})
+vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,{})
+vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help,{})
+vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references,{})
+vim.keymap.set('n', '<leader>rn',vim.lsp.buf.rename,{})
 
 -- Keymap to toggle diagnostics
 vim.keymap.set('n', '<leader>dn', ToggleDiagnostics, { noremap = true, silent = true })
