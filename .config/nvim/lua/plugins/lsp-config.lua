@@ -60,16 +60,6 @@ return{
       })
       lspconfig.r_language_server.setup({
 	capabilities = capabilities,
-	settings = {
-	  r = {
-	    lsp = {
-	      diagnostics = false
-	      -- diagnostics = {
-	      --   disabled = { "lintr::infix_spaces_linter", "lintr::object_length_linter" },
-	      -- }
-	    }
-	  }
-	}
       })
     end
   }
