@@ -1,8 +1,8 @@
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.cmd("set softtabstop=4")
+vim.cmd("set shiftwidth=4")
 vim.cmd("set number")
 vim.g.mapleader = " "
-vim.o.numberwidth = 2
+vim.o.numberwidth = 4
 
 --auto-complete brace
 local function auto_complete_braces()
