@@ -1,7 +1,7 @@
 # Path
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/home/(name)/.fzf/bin
-export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/nvim
+# export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/nvim
 
 # Theme
 ZSH_THEME="robbyrussell"
@@ -26,6 +26,6 @@ alias r="sh ./run.sh"
 # init
 source $ZSH/oh-my-zsh.sh
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

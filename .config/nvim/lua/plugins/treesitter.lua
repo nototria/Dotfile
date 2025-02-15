@@ -4,7 +4,7 @@ return{
   config =function()
     local configs =require("nvim-treesitter.configs")
     configs.setup({
-    ensure_installed = {"lua","c","cpp","vim","python","r","systemverilog"},
+    ensure_installed = {"lua","c","cpp","vim","bash","python",},
     highlight = {enable = true},
     indent = {enable = true},
     })
