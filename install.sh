@@ -34,7 +34,7 @@ install_package() {
 }
 
 ensure_dependencies() {
-  local dependencies=("stow" "zsh" "git" "wget" "jq")
+  local dependencies=("stow" "zsh" "git" "wget" "jq" "unzip")
   for dep in "${dependencies[@]}"; do
     if ! command -v "$dep" &> /dev/null; then
       echo "$dep not found. Installing..."
@@ -118,6 +118,10 @@ install_nerd_fonts() {
 
 cleanup_home_directory() {
   local target_dir="$1"
+  if [ ! -d "$target_dir" ]; then
+    echo "Error: Directory $target_dir does not exist."
+    return 1
+  fi
   echo "Cleaning up existing files in $target_dir..."
   find "$target_dir" -mindepth 1 -exec rm -rf {} \;
 }
