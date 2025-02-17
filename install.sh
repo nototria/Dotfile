@@ -88,6 +88,17 @@ install_fzf() {
   fi
 }
 
+install_tpm() {
+    local tpm_dir="$HOME/.tmux/plugins/tpm"
+
+    if [ -d "$tpm_dir" ]; then
+        echo "TPM is already installed at $tpm_dir"
+    else
+        echo "Installing TPM..."
+        git clone https://github.com/tmux-plugins/tpm "$tpm_dir" && echo "TPM installed successfully!"
+    fi
+}
+
 install_nerd_fonts() {
   echo "Installing Nerd Fonts..."
   local fonts=("JetBrainsMono" "Meslo")
@@ -164,6 +175,9 @@ main() {
 
   echo "Installing fzf..."
   install_fzf
+
+  echo "Installing tpm..."
+  install_tpm
 
   echo "Installing Nerd Fonts..."
   install_nerd_fonts
