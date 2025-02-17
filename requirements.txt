@@ -5,3 +5,9 @@ tmux
 npm
 curl
 jq
+stow
+zsh
+git
+wget
+jq
+unzip

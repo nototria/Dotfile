@@ -34,15 +34,14 @@ install_package() {
 }
 
 ensure_dependencies() {
-  local dependencies=("stow" "zsh" "git" "wget" "jq" "unzip")
-  for dep in "${dependencies[@]}"; do
-    if ! command -v "$dep" &> /dev/null; then
-      echo "$dep not found. Installing..."
-      install_package "$dep"
-    else
-      echo "$dep is already installed."
-    fi
-  done
+  if [[ -f "requirements.txt" ]]; then
+    echo "Installing packages from requirements.txt..."
+    while IFS= read -r package; do
+      install_package "$package"
+  done < "requirements.txt"
+  else
+    echo "requirements.txt not found. Skipping package installation."
+  fi
 }
 
 backup_zshrc() {
@@ -168,15 +167,6 @@ main() {
 
   echo "Installing Nerd Fonts..."
   install_nerd_fonts
-
-  if [[ -f "requirements.txt" ]]; then
-    echo "Installing packages from requirements.txt..."
-    while IFS= read -r package; do
-      install_package "$package"
-    done < "requirements.txt"
-  else
-    echo "requirements.txt not found. Skipping package installation."
-  fi
 
   echo "Stowing dotfiles..."
   cleanup_home_directory "$HOME"
