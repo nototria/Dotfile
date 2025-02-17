@@ -3,7 +3,7 @@
 set -e
 set -o pipefail 
 
-LOG_FILE="install.log"
+LOG_FILE="$HOME/install.log"
 exec > >(tee -i "$LOG_FILE") 2>&1
 
 echo "Starting installation script at $(date)..."
