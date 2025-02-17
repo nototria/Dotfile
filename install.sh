@@ -110,7 +110,7 @@ install_nerd_fonts() {
   fc-cache -fv
 }
 
-cleanup_home_directory() {
+cleanup_directory() {
   local dotfile_dir="$HOME/Dotfile"
   echo "Cleaning up existing files in the home directory..."
   for file in "$dotfile_dir"/*; do
@@ -169,7 +169,7 @@ main() {
   install_nerd_fonts
 
   echo "Stowing dotfiles..."
-  cleanup_home_directory "$HOME"
+  cleanup_directory "$HOME"
   stow .
 
   echo "Prompting user to change shell to Zsh..."
