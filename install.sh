@@ -157,7 +157,7 @@ main() {
   install_oh_my_zsh
 
   echo "Restoring .zshrc..."
-  backup_and_restore_zshrc
+  backup_zshrc
 
   echo "Installing Zsh plugins..."
   install_zsh_plugins
