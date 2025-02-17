@@ -112,13 +112,15 @@ install_nerd_fonts() {
 }
 
 cleanup_home_directory() {
-  local target_dir="$1"
-  if [ ! -d "$target_dir" ]; then
-    echo "Error: Directory $target_dir does not exist."
-    return 1
-  fi
-  echo "Cleaning up existing files in $target_dir..."
-  find "$target_dir" -mindepth 1 -exec rm -rf {} \;
+  local dotfile_dir="$HOME/Dotfile"
+  echo "Cleaning up existing files in the home directory..."
+  for file in "$dotfile_dir"/*; do
+    filename=$(basename "$file")
+    if [ -e "$HOME/$filename" ]; then
+      echo "Removing $HOME/$filename"
+      rm -rf "$HOME/$filename"
+    fi
+  done
 }
 
 change_shell_to_zsh() {
