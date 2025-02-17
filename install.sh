@@ -45,15 +45,10 @@ ensure_dependencies() {
   done
 }
 
-backup_and_restore_zshrc() {
+backup_zshrc() {
   if [[ -f "$HOME/.zshrc" ]]; then
     echo "Backing up existing .zshrc to .zshrc.bak"
     mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
-  fi
-
-  if [[ -f "$HOME/.zshrc.bak" ]]; then
-    echo "Restoring custom .zshrc"
-    mv "$HOME/.zshrc.bak" "$HOME/.zshrc"
   fi
 }
 
