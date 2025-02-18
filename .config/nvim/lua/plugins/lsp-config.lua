@@ -116,4 +116,31 @@ return {
             end,
         },
     }
-
+    lspconfig.clangd.setup({
+        capabilities = capabilities,
+        init_options = {
+            fallbackFlags = {''}
+        }
+    })
+    lspconfig.pyright.setup({
+        capabilities = capabilities,
+        settings = {
+            python = {
+                analysis = {
+                    diagnosticMode = "openFilesOnly",
+                    typeCheckingMode = "off",
+                    useLibraryCodeForTypes = true,
+                    diagnosticSeverityOverrides = {
+                        reportGeneralTypeIssues = "none",
+                        reportOptionalSubscript = "none",
+                    }
+                }
+            }
+        }
+    })
+    lspconfig.r_language_server.setup({
+        capabilities = capabilities,
+    })
+end
+  }
+}
