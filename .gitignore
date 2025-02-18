@@ -1,4 +1,5 @@
 .config/fcitx5
+.config/Ripes
 .config/nvim/lazy-lock.json
 .config/QtProject.conf
 README.md
