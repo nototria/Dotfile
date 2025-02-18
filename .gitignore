@@ -1,5 +1,6 @@
 .config/fcitx5
 .config/nvim/lazy-lock.json
+.config/QtProject.conf
 README.md
 .config/procps
 .config/QtProject.conf
