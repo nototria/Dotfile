@@ -2,6 +2,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 export PATH=$PATH:/home/(name)/.fzf/bin
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export EDITOR="nvim"
+export VISUAL="nvim"
 # export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/nvim
 
 # Theme
