@@ -66,7 +66,13 @@ return {
             -- C / C++
             vim.lsp.config("clangd", {
                 init_options = {
+                    clangdFileStatus = true,
                     fallbackFlags = { "--std=c++20" },
+                },
+                cmd = {
+                    "clangd",
+                    "--clang-tidy",
+                    "--header-insertion=never",
                 },
             })
 

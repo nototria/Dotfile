@@ -6,6 +6,7 @@ vim.g.mapleader = " "
 vim.o.numberwidth = 4
 
 --auto-complete brace
+--[[
 local function auto_complete_braces()
   local row, col = table.unpack(vim.api.nvim_win_get_cursor(0)) local current_line = vim.api.nvim_get_current_line()
   local current_indent = string.match(current_line, "^%s*")
@@ -19,6 +20,8 @@ local function auto_complete_braces()
   vim.api.nvim_win_set_cursor(0, {row + 1, #current_indent + shiftwidth + 1})
 end
 vim.keymap.set('i', '{', auto_complete_braces, { noremap = true, silent = true })
+]]
+vim.cmd("inoremap { {}<Esc>ha")
 vim.cmd("inoremap ( ()<Esc>ha")
 vim.cmd("inoremap [ []<Esc>ha")
 vim.cmd("inoremap ' ''<Esc>ha")
@@ -70,3 +73,22 @@ vim.keymap.set('n', '<leader>dn', ToggleDiagnostics, { noremap = true, silent = 
 vim.keymap.set("n", "<leader>e", function()
   vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
 end, { desc = "Line diagnostics" })
+
+-- clang code format
+vim.keymap.set("n", "<leader>cf", function()
+  local buf = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  vim.system(
+    { "clang-format" },
+    { text = true, stdin = table.concat(lines, "\n") },
+    function(res)
+      vim.schedule(function()
+        if res.code ~= 0 then return end
+        local out = res.stdout:gsub("\n$", "")
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(out, "\n"))
+      end)
+    end
+  )
+end, { desc = "clang-format buffer" })
+
