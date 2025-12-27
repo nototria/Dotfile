@@ -65,3 +65,8 @@ vim.keymap.set('n', '<leader>rn',vim.lsp.buf.rename,{})
 
 -- Keymap to toggle diagnostics
 vim.keymap.set('n', '<leader>dn', ToggleDiagnostics, { noremap = true, silent = true })
+
+-- show full diagnostics
+vim.keymap.set("n", "<leader>e", function()
+  vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+end, { desc = "Line diagnostics" })
