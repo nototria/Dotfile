@@ -1,6 +1,6 @@
 # Path
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=$PATH:/home/(name)/.fzf/bin
+export "PATH=$PATH:/home/$USER/.fzf/bin:/opt/nvim-linux-x86_64/bin:/home/$USER/riscv/riscv-gnu-toolchain"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export EDITOR="nvim"
 export VISUAL="nvim"

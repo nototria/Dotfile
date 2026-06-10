@@ -2,3 +2,5 @@
 .config/nvim/lazy-lock.json
 README.md
 .config/procps
+.config/QtProject.conf
+.config/Ripes/
