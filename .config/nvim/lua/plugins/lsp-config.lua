@@ -1,43 +1,21 @@
 return {
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason-lspconfig.nvim",
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+            "hrsh7th/cmp-nvim-lsp",
+        },
         config = function()
-            require("mason").setup()
-        end,
-    },
-
-    {
-        "williamboman/mason-lspconfig.nvim",
-        -- mason-lspconfig >= 2.0 uses vim.lsp.enable() under the hood :contentReference[oaicite:0]{index=0}
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = {
-                    "lua_ls",
-                    "clangd",
-                    "pyright",
-                    "svlangserver",
-                    -- add others here *only* if Mason supports them
-                    -- e.g. "r_language_server" if you want Mason to manage it
-                },
-                -- optional:
-                -- automatic_enable = true, -- this is the default
-            })
-        end,
-    },
-
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            -- 1. Capabilities (nvim-cmp)
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-            -- 2. Global defaults for *all* LSP clients :contentReference[oaicite:1]{index=1}
+            -- Global default config for all LSP clients
             vim.lsp.config("*", {
                 capabilities = capabilities,
             })
+
             vim.diagnostic.config({
-                -- Only show inline text for Errors
                 virtual_text = {
                     severity = vim.diagnostic.severity.ERROR,
                 },
@@ -51,28 +29,30 @@ return {
                 },
             })
 
-            -- 3. Per-server configuration
-
             -- Lua
             vim.lsp.config("lua_ls", {
-                -- add Lua-specific settings here if you want
-                -- settings = { ... }
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" },
+                        },
+                    },
+                },
             })
 
             -- SystemVerilog
-            vim.lsp.config("svlangserver", {
-            })
+            vim.lsp.config("svlangserver", {})
 
             -- C / C++
             vim.lsp.config("clangd", {
-                init_options = {
-                    clangdFileStatus = true,
-                    fallbackFlags = { "--std=c++20" },
-                },
                 cmd = {
                     "clangd",
                     "--clang-tidy",
                     "--header-insertion=never",
+                },
+                init_options = {
+                    clangdFileStatus = true,
+                    fallbackFlags = { "--std=c++20" },
                 },
             })
 
@@ -94,53 +74,22 @@ return {
             })
 
             -- R
-            vim.lsp.config("r_language_server", {
-                -- extra settings if needed
+            vim.lsp.config("r_language_server", {})
+
+            -- mason-lspconfig v2 automatically enables installed servers by default
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "lua_ls",
+                    "clangd",
+                    "pyright",
+                    "svlangserver",
+                },
+                automatic_enable = true,
             })
 
-            -- 4. Enabling servers
-            -- If you keep mason-lspconfig's default `automatic_enable` = true,
-            -- you do NOT need to call vim.lsp.enable() manually.
-            -- Mason will call vim.lsp.enable('<server>') for installed servers. :contentReference[oaicite:2]{index=2}
-
-            -- If you *disable* automatic_enable in mason-lspconfig, then you need:
-            -- for _, server in ipairs({
-                --   "lua_ls",
-                --   "svlangserver",
-                --   "clangd",
-                --   "pyright",
-                --   "r_language_server",
-                -- }) do
-                --   vim.lsp.enable(server)
-                -- end
-            end,
-        },
-    }
-    lspconfig.clangd.setup({
-        capabilities = capabilities,
-        init_options = {
-            fallbackFlags = {''}
-        }
-    })
-    lspconfig.pyright.setup({
-        capabilities = capabilities,
-        settings = {
-            python = {
-                analysis = {
-                    diagnosticMode = "openFilesOnly",
-                    typeCheckingMode = "off",
-                    useLibraryCodeForTypes = true,
-                    diagnosticSeverityOverrides = {
-                        reportGeneralTypeIssues = "none",
-                        reportOptionalSubscript = "none",
-                    }
-                }
-            }
-        }
-    })
-    lspconfig.r_language_server.setup({
-        capabilities = capabilities,
-    })
-end
-  }
+            -- Enable R manually if it is installed outside Mason.
+            -- If Mason supports it in your setup, you can instead add it to ensure_installed.
+            vim.lsp.enable("r_language_server")
+        end,
+    },
 }
