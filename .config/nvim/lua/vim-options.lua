@@ -1,94 +1,149 @@
-vim.cmd("set softtabstop=4")
-vim.cmd("set shiftwidth=4")
-vim.cmd("set expandtab")
-vim.cmd("set number")
+-- Basic editor options
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.number = true
+vim.opt.numberwidth = 4
+
 vim.g.mapleader = " "
-vim.o.numberwidth = 4
 
---auto-complete brace
---[[
-local function auto_complete_braces()
-  local row, col = table.unpack(vim.api.nvim_win_get_cursor(0)) local current_line = vim.api.nvim_get_current_line()
-  local current_indent = string.match(current_line, "^%s*")
-  local shiftwidth = vim.api.nvim_get_option("shiftwidth")
-  local tab_spaces = string.rep(" ", shiftwidth)
-  vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, {
-    "{",
-    current_indent .. tab_spaces,
-    current_indent .. "}"
-  })
-  vim.api.nvim_win_set_cursor(0, {row + 1, #current_indent + shiftwidth + 1})
-end
-vim.keymap.set('i', '{', auto_complete_braces, { noremap = true, silent = true })
-]]
-vim.cmd("inoremap { {}<Esc>ha")
-vim.cmd("inoremap ( ()<Esc>ha")
-vim.cmd("inoremap [ []<Esc>ha")
-vim.cmd("inoremap ' ''<Esc>ha")
-vim.cmd([[inoremap " ""<Esc>i]])
-
--- movement between window
-vim.keymap.set('n','<c-k>',':wincmd k<CR>')
-vim.keymap.set('n','<c-j>',':wincmd j<CR>')
-vim.keymap.set('n','<c-h>',':wincmd h<CR>')
-vim.keymap.set('n','<c-l>',':wincmd l<CR>')
-
--- Function to toggle diagnostics
-local diagnostics_enabled = true
-
+-- Diagnostics toggle
 local function ToggleDiagnostics()
-  diagnostics_enabled = not diagnostics_enabled
-  if diagnostics_enabled then
-    vim.diagnostic.enable()
-    print("diagnostic enable")
-  else
-    vim.diagnostic.disable()
-    print("diagnostic disable")
-  end
+    local enabled = vim.diagnostic.is_enabled()
+
+    vim.diagnostic.enable(not enabled)
+
+    if enabled then
+        print("diagnostic disabled")
+    else
+        print("diagnostic enabled")
+    end
 end
 
--- treesitter hotkey
-vim.keymap.set('n', '<leader>tt', ':Neotree toggle<CR>', {})
+vim.keymap.set("n", "<leader>dn", ToggleDiagnostics, {
+    noremap = true,
+    silent = true,
+    desc = "Toggle diagnostics",
+})
 
--- tmux-vim navigator hotkey
-vim.keymap.set('n','C-h', ':TmuxNavigateLeft<CR>')
-vim.keymap.set('n','C-j', ':TmuxNavigateDown<CR>')
-vim.keymap.set('n','C-k', ':TmuxNavigateUp<CR>')
-vim.keymap.set('n','C-l', ':TmuxNavigateRight<CR>')
-
--- lsp hotkey
-vim.keymap.set('n','K',vim.lsp.buf.hover,{})
-vim.keymap.set({'n'},'<leader>ca',vim.lsp.buf.code_action,{})
-vim.keymap.set('n', '<leader>gd',vim.lsp.buf.definition,{})
-vim.keymap.set('n','<leader>gD',vim.lsp.buf.declaration,{})
-vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,{})
-vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help,{})
-vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references,{})
-vim.keymap.set('n', '<leader>rn',vim.lsp.buf.rename,{})
-
--- Keymap to toggle diagnostics
-vim.keymap.set('n', '<leader>dn', ToggleDiagnostics, { noremap = true, silent = true })
-
--- show full diagnostics
+-- Show full diagnostics for current line
 vim.keymap.set("n", "<leader>e", function()
-  vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
-end, { desc = "Line diagnostics" })
+    vim.diagnostic.open_float(nil, {
+        focus = false,
+        scope = "line",
+    })
+end, {
+    noremap = true,
+    silent = true,
+    desc = "Line diagnostics",
+})
 
--- clang code format
+-- Neotree toggle
+vim.keymap.set("n", "<leader>tt", "<cmd>Neotree toggle<CR>", {
+    noremap = true,
+    silent = true,
+    desc = "Toggle Neotree",
+})
+
+-- tmux-vim navigator hotkeys
+vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>", {
+    noremap = true,
+    silent = true,
+    desc = "Navigate left",
+})
+
+vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", {
+    noremap = true,
+    silent = true,
+    desc = "Navigate down",
+})
+
+vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", {
+    noremap = true,
+    silent = true,
+    desc = "Navigate up",
+})
+
+vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>", {
+    noremap = true,
+    silent = true,
+    desc = "Navigate right",
+})
+
+-- LSP hotkeys
+vim.keymap.set("n", "K", vim.lsp.buf.hover, {
+    noremap = true,
+    silent = true,
+    desc = "LSP hover",
+})
+
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
+    noremap = true,
+    silent = true,
+    desc = "LSP code action",
+})
+
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {
+    noremap = true,
+    silent = true,
+    desc = "LSP definition",
+})
+
+vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, {
+    noremap = true,
+    silent = true,
+    desc = "LSP declaration",
+})
+
+vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, {
+    noremap = true,
+    silent = true,
+    desc = "LSP type definition",
+})
+
+vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, {
+    noremap = true,
+    silent = true,
+    desc = "LSP signature help",
+})
+
+vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {
+    noremap = true,
+    silent = true,
+    desc = "LSP references",
+})
+
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {
+    noremap = true,
+    silent = true,
+    desc = "LSP rename",
+})
+
+-- clang-format current buffer
 vim.keymap.set("n", "<leader>cf", function()
-  local buf = vim.api.nvim_get_current_buf()
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    local buf = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
 
-  vim.system(
-    { "clang-format" },
-    { text = true, stdin = table.concat(lines, "\n") },
-    function(res)
-      vim.schedule(function()
-        if res.code ~= 0 then return end
-        local out = res.stdout:gsub("\n$", "")
-        vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(out, "\n"))
-      end)
-    end
-  )
-end, { desc = "clang-format buffer" })
+    vim.system(
+        { "clang-format" },
+        {
+            text = true,
+            stdin = table.concat(lines, "\n"),
+        },
+        function(res)
+            vim.schedule(function()
+                if res.code ~= 0 then
+                    vim.notify("clang-format failed", vim.log.levels.ERROR)
+                    return
+                end
 
+                local out = res.stdout:gsub("\n$", "")
+                vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(out, "\n"))
+            end)
+        end
+    )
+end, {
+    noremap = true,
+    silent = true,
+    desc = "clang-format buffer",
+})
