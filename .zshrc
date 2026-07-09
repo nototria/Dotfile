@@ -4,6 +4,7 @@ export "PATH=$PATH:/home/$USER/.fzf/bin:/opt/nvim-linux-x86_64/bin:/home/$USER/r
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PATH="/home/czh/.local/bin:$PATH"
 # export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/nvim
 
 # Theme
