@@ -7,6 +7,8 @@ return {
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
+            vim.lsp.log.set_level(vim.log.levels.OFF)
+
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             capabilities.textDocument.completion.completionItem.snippetSupport = true
 
