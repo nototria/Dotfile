@@ -4,6 +4,10 @@ return {
   priority = 1000,
   config = function()
     vim.cmd.colorscheme "kanagawa-dragon"
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
+      undercurl = true,
+      sp = "#c0c0c0",
+    })
     vim.cmd("set number")
     vim.opt.relativenumber = true
     vim.cmd([[

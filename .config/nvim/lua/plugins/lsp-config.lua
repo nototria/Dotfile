@@ -21,7 +21,14 @@ return {
                 virtual_text = {
                     severity = vim.diagnostic.severity.ERROR,
                 },
-                signs = true,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "E",
+                        [vim.diagnostic.severity.WARN] = "W",
+                        [vim.diagnostic.severity.INFO] = "I",
+                        [vim.diagnostic.severity.HINT] = "H",
+                    },
+                },
                 underline = true,
                 update_in_insert = false,
                 severity_sort = true,
@@ -54,7 +61,7 @@ return {
                 },
                 init_options = {
                     clangdFileStatus = true,
-                    fallbackFlags = { "--std=c++20" },
+                    fallbackFlags = { "-Wall", "-Wextra" },
                 },
             })
 

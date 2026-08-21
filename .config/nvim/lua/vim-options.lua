@@ -4,6 +4,18 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.numberwidth = 4
+vim.opt.signcolumn = "yes"
+
+-- The dashboard hides its window-local sign column. Restore it when that
+-- window is reused for a normal file buffer.
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        if vim.bo.buftype == "" then
+            vim.wo.signcolumn = "yes"
+        end
+    end,
+    desc = "Show diagnostic signs in file buffers",
+})
 
 vim.g.mapleader = " "
 
@@ -122,26 +134,18 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {
 -- clang-format current buffer
 vim.keymap.set("n", "<leader>cf", function()
     local buf = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    local clients = vim.lsp.get_clients({ bufnr = buf, name = "clangd" })
 
-    vim.system(
-        { "clang-format" },
-        {
-            text = true,
-            stdin = table.concat(lines, "\n"),
-        },
-        function(res)
-            vim.schedule(function()
-                if res.code ~= 0 then
-                    vim.notify("clang-format failed", vim.log.levels.ERROR)
-                    return
-                end
+    if #clients == 0 then
+        vim.notify("clangd is not attached to this buffer", vim.log.levels.ERROR)
+        return
+    end
 
-                local out = res.stdout:gsub("\n$", "")
-                vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(out, "\n"))
-            end)
-        end
-    )
+    vim.lsp.buf.format({
+        bufnr = buf,
+        name = "clangd",
+        async = false,
+    })
 end, {
     noremap = true,
     silent = true,
