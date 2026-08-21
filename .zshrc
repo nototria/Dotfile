@@ -30,7 +30,7 @@ alias r="sh ./run.sh"
 # init
 source $ZSH/oh-my-zsh.sh
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
